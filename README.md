@@ -11,7 +11,7 @@ go build
 ## Use homebrew
 ```shell
 brew tap MrEasonYang/taps
-brew install flomo-cli
+brew install flomo
 ```
 
 # Usage

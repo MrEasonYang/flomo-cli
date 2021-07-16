@@ -1,0 +1,72 @@
+project_name: flomo
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    targets:
+      - linux_amd64
+      - darwin_amd64
+      - darwin_arm64
+      - windows_amd64
+    
+archives:
+  -
+    replacements:
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+      amd64: x86_64
+
+    format_overrides:
+      - goos: windows
+        format: zip
+
+    files:
+      - LICENSE
+      - README.md
+
+brews:
+  -
+    tap:
+      owner: MrEasonYang
+      name: homebrew-taps
+
+    url_template: "https://github.com/MrEasonYang/flomo-cli/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+
+    commit_author:
+      name: MrEasonYang
+      email: me@easonyang.com
+
+    caveats: "Setup by using `flomo set api ${Your API}` command, send memo to flomo by using `flomo save ${Memo content}` command."
+
+    homepage: "https://github.com/MrEasonYang/flomo-cli"
+
+    description: "A Golang based command line interface of flomo. Visit https://easonyang.com to get more information."
+
+    license: "MIT"
+
+    dependencies:
+      - name: git
+      - name: go
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-SNAPSHOT"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^*.md:"
