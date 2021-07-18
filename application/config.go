@@ -15,7 +15,7 @@ func SaveConfig(config FlomoConfig) {
 		panic(err)
 	}
 
-	err = ioutil.WriteFile(parseConfigPath(), data, 0600)
+	err = ioutil.WriteFile(ParseFilePath(CONFIG_FILE_NAME), data, 0600)
 	if err != nil {
 		panic(err)
 	}
@@ -23,7 +23,7 @@ func SaveConfig(config FlomoConfig) {
 
 // GetConfig is the way to read flomo-cli config.
 func GetConfig() FlomoConfig {
-	file, err := os.Open(parseConfigPath())
+	file, err := os.Open(ParseFilePath(CONFIG_FILE_NAME))
 	if err != nil {
 		panic(err)
 	}
@@ -40,15 +40,6 @@ func GetConfig() FlomoConfig {
 	}
 
 	return config
-}
-
-// Common func to parse config path with the user home dir.
-func parseConfigPath() string {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		panic(err)
-	}
-	return homeDir + "/" + CONFIG_FILE_NAME
 }
 
 // FlomoConfig is the struct of the flomo-cli config.
