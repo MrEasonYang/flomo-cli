@@ -3,9 +3,12 @@ package application
 import (
 	"os"
 	"os/exec"
+	"io"
 	"io/ioutil"
+	"bufio"
 	"fmt"
 	"time"
+	"strings"
 )
 
 const MEMO_EDITOR_INPUT_LEN = 2
@@ -38,6 +41,21 @@ const SET_API_COMMAND = "api"
 
 // Handle is the entry of the cli.
 func Handle() {
+	cmdInfo, err := os.Stdin.Stat()
+	if err != nil {
+		panic(err)
+	}
+	if cmdInfo.Mode()&os.ModeNamedPipe != 0 {
+		reader := bufio.NewReader(os.Stdin)
+		buffer := new(strings.Builder)
+		_, err := io.Copy(buffer, reader)
+		if err != nil {
+			panic(err)
+		}
+		SendMemo(buffer.String())
+		return
+	}
+
 	input := os.Args
 	length := len(input)
 	switch length {
