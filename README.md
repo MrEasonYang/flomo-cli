@@ -42,6 +42,11 @@ Just type a memo with the save command into the flomo command:
 flomo save ${Your memo content}
 ```
 And that's it!
+### Using shell pipes
+Just like usual command line programs, you can use command like `cat` with the shell pipe to save an entire file into flomo:
+```shell
+cat memo.txt | flomo
+```
 ### Editor mode
 Instead of input the memo with the command, you can use editors to compose the memo:
 ```shell
