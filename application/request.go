@@ -8,6 +8,9 @@ import (
 
 // SendMemo is the func to request flomo server and save the content.
 func SendMemo(content string) {
+	if content == "" {
+		panic("The memo content is empty, type something and try it again.")
+	}
 	config := GetConfig()	
 	if config.Api == "" {
 		panic("Flomo API is not set.")
