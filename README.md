@@ -1,5 +1,6 @@
 # flomo-cli
 A Golang based command line interface of [flomo](https://flomoapp.com/).
+
 [中文说明](https://easonyang.com/2021/07/17/flomo-cli-cn-readme/)
 
 # Features
