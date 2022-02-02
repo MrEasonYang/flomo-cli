@@ -1,14 +1,15 @@
 package application
 
 import (
-	"os"
-	"os/exec"
-	"io"
-	"io/ioutil"
 	"bufio"
 	"fmt"
-	"time"
+	"io"
+	"io/ioutil"
+	"os"
+	"os/exec"
+	"strconv"
 	"strings"
+	"time"
 )
 
 const MEMO_EDITOR_INPUT_LEN = 2
@@ -22,14 +23,16 @@ const SAVE_BY_VIM_COMMAND = "vim"
 const SAVE_BY_NVIM_COMMAND = "nvim"
 const SAVE_BY_EMACS_COMMAND = "emacs"
 const EDITOR_TEMP_FILE_DIR = ".flomo-tmp"
-const VIM_TEMP_FILE_PREFIX = EDITOR_TEMP_FILE_DIR + "/vim-memo-tmp-"
-const NVIM_TEMP_FILE_PREFIX = EDITOR_TEMP_FILE_DIR + "/nvim-memo-tmp-"
-const EMACS_TEMP_FILE_PREFIX = EDITOR_TEMP_FILE_DIR + "/emacs-memo-tmp-"
+const VIM_TEMP_FILE_PREFIX = EDITOR_TEMP_FILE_DIR + string(os.PathSeparator) + "vim-memo-tmp-"
+const NVIM_TEMP_FILE_PREFIX = EDITOR_TEMP_FILE_DIR + string(os.PathSeparator) + "nvim-memo-tmp-"
+const EMACS_TEMP_FILE_PREFIX = EDITOR_TEMP_FILE_DIR + string(os.PathSeparator) + "emacs-memo-tmp-"
+
 var EDITOR_COMMAND_MAP = map[string]string{
-    SAVE_BY_VIM_COMMAND: VIM_TEMP_FILE_PREFIX,
-    SAVE_BY_NVIM_COMMAND: NVIM_TEMP_FILE_PREFIX,
-    SAVE_BY_EMACS_COMMAND: EMACS_TEMP_FILE_PREFIX,
+	SAVE_BY_VIM_COMMAND:   VIM_TEMP_FILE_PREFIX,
+	SAVE_BY_NVIM_COMMAND:  NVIM_TEMP_FILE_PREFIX,
+	SAVE_BY_EMACS_COMMAND: EMACS_TEMP_FILE_PREFIX,
 }
+
 const CLEAR_TEMP_COMMAND = "clear"
 
 const CONFIG_INPUT_LEN = 4
@@ -105,7 +108,7 @@ func execTextEditor(editorType string) string {
 	if filePrefix == "" {
 		panic("The editor you typed is not currently supported, try to use vim/nvim/emacs instead.")
 	}
-	filePath := filePrefix + time.Now().Local().String()
+	filePath := filePrefix + strconv.FormatInt(time.Now().UnixNano(), 10)
 
 	err := os.MkdirAll(ParseFilePath(EDITOR_TEMP_FILE_DIR), os.ModePerm)
 	if err != nil {

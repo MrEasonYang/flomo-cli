@@ -8,5 +8,5 @@ func ParseFilePath(path string) string {
 	if err != nil {
 		panic(err)
 	}
-	return homeDir + "/" + path
+	return homeDir + string(os.PathSeparator) + path
 }
