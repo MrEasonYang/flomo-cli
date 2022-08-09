@@ -18,3 +18,5 @@ flomo-clidist/
 dist
 flomo-cli
 .idea
+
+.DS_Store
