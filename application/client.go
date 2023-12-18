@@ -60,7 +60,18 @@ func Handle() {
 	}
 
 	input := os.Args
+        inputByConcat := ""
 	length := len(input)
+        if length > 4 {
+            for i, v := range input {
+                if i < 2 {
+                    continue
+                }
+                inputByConcat += " " + v
+            }
+            input[MEMO_INPUT_POS] = inputByConcat
+            length = MEMO_INPUT_LEN
+        }
 	switch length {
 	case MEMO_EDITOR_INPUT_LEN:
 		editorCommand := input[EDITOR_COMMAND_INPUT_POS]
