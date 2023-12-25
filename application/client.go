@@ -62,12 +62,16 @@ func Handle() {
 	input := os.Args
         inputByConcat := ""
 	length := len(input)
-        if length > 4 {
+        if length > CONFIG_INPUT_LEN {
             for i, v := range input {
                 if i < 2 {
                     continue
                 }
-                inputByConcat += " " + v
+                if i == 2 {
+                    inputByConcat += v   
+                } else {
+                    inputByConcat += " " + v
+                }
             }
             input[MEMO_INPUT_POS] = inputByConcat
             length = MEMO_INPUT_LEN
@@ -101,7 +105,8 @@ func Handle() {
 		if input[SET_COMMAND_INPUT_POS] == SET_API_COMMAND {
 			commandContent := input[COMMAND_CONTENT_INPUT_POS]
 			if commandContent == "" {
-				fmt.Println("The command content is blank, try [flomo set api].")
+                            fmt.
+                            Println("The command content is blank, try [flomo set api].")
 			}
 			SaveConfig(FlomoConfig{Api: commandContent})
 			return
