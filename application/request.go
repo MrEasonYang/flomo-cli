@@ -1,5 +1,6 @@
 package application
 
+
 import (
 	"net/http"
 	"encoding/json"
@@ -17,7 +18,7 @@ func SendMemo(content string) {
 	}
 
 	body := ReqBody{}
-	body.Content = content
+	body.Content = "#cli " + content
 	jsonValue, err := json.Marshal(body)
 	if err != nil {
 		panic("Failed to parse flomo memo request.")
